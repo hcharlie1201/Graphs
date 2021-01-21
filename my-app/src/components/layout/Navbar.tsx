@@ -1,9 +1,12 @@
 import React from 'react'
 
-function Navbar(props) {
+interface NavProps {
+    title : string;
+}
+function Navbar(prop: NavProps) {
     return (
         <nav className="bg-blue-800">
-            <h1>{props.title}</h1>
+            <h1>{prop.title}</h1>
         </nav>
     )
 }
