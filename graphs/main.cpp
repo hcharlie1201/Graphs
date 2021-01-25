@@ -24,15 +24,18 @@ using bsoncxx::builder::stream::finalize;
 using bsoncxx::builder::stream::open_array;
 using bsoncxx::builder::stream::open_document;
 
-auto client = mongocxx::client{
-    uri{"mongodb://host1/?authMechanism=MONGODB-X509&tlsCertificateFile=client.pem&tls=true"}};
-
-const mongocxx::instance instance{}; // This should be done only once.
-const mongocxx::uri uri("mongodb://localhost:27017");
-const mongocxx::client client(uri);
+mongocxx::instance instance{}; // This should be done only once.
+mongocxx::uri uri("mongodb+srv://charlie:cw@cluster0.bzktw.mongodb.net/Graphs?retryWrites=true&w=majority");
+mongocxx::client client(uri);
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    mongocxx::database db = client["Graphs"];
+    mongocxx::collection myColl = db["Nodes"];
+    mongocxx::cursor cursor = myColl.find({});
+    for(auto doc : cursor) {
+        std::cout << bsoncxx::to_json(doc) << "\n";
+    }
+
     return 0;
 }
